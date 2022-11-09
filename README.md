@@ -8,8 +8,6 @@ A description of this package.
 
 ViewModel is not a new concept. It’s the main part of the MVVM design pattern that was first introduced in 2005 by Josh Gossman in [this post](Introduction to Model/View/ViewModel pattern for building WPF apps ) at Microsoft’s blog. MVVM brings all the testability and decoupling we need and in it's core has only 3 layers. And the name of these layers explain themselves. Additional coordinator part of the MVVM-C pattern was added to handle communication between MVVM-C modules.
 
- 
-
 ## Navigation Patterns
 
 ### Coordinator Pattern
