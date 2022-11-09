@@ -1,3 +1,4 @@
+
 import UIKit
 
 public class Snappay_SDK_iOS_Build {
@@ -23,6 +24,6 @@ public class Snappay_SDK_iOS_Build {
     
     /// dismissSnappaySDK dismisses the snappay SDK
     public func dismissSnappaySDK() {
-        
+    
     }
 }
