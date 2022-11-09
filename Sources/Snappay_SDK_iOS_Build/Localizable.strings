@@ -1,0 +1,15 @@
+/* 
+  Localizable.strings
+  
+
+  Created by Timothy Obeisun on 11/9/22.
+  
+*/
+
+
+"emptyString" = "";
+"scanButtonTitle" = "Scan";
+"imageWidth" = "imageWidth";
+"clientCode" = "clientCode";
+"imageHeight" = "imageHeight";
+"phoneNumber" = "phoneNumber";
