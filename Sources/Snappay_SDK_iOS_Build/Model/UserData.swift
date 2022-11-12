@@ -14,6 +14,7 @@ public struct UserData {
     let imageWidth: CGFloat
     let imageHeight: CGFloat
     let apiKey: String?
+    let amount: Double
     
     public init(
         logo: UIImage,
@@ -21,7 +22,8 @@ public struct UserData {
         clientCode: String,
         imageWidth: CGFloat,
         imageHeight: CGFloat,
-        apiKey: String?
+        apiKey: String?,
+        amount: Double
     ) {
         self.logo = logo
         self.phoneNumber = phoneNumber
@@ -29,5 +31,6 @@ public struct UserData {
         self.imageWidth = imageWidth
         self.imageHeight = imageHeight
         self.apiKey = apiKey
+        self.amount = amount
     }
 }
