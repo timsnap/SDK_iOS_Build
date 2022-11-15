@@ -53,14 +53,14 @@ class HomePageView: UIView {
     }()
     
     lazy var scanImageContainer: UIView = {
-       let scanImageContainer = UIView()
+        let scanImageContainer = UIView()
         scanImageContainer.backgroundColor = #colorLiteral(red: 0.537254902, green: 0.8392156863, blue: 0.9843137255, alpha: 0.4431069303)
         scanImageContainer.layer.cornerRadius = 35
         return scanImageContainer
     }()
     
     lazy var scanImageView: UIImageView = {
-       let scanImageView = UIImageView()
+        let scanImageView = UIImageView()
         scanImageView.backgroundColor = .clear
         let image = UIImage().loadImage(named: "scan_1")
         scanImageView.image = image

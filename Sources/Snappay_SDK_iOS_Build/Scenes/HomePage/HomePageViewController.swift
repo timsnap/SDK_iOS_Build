@@ -25,11 +25,11 @@ class HomePageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         setupViews()
         configurator.configure(with: HomePageNetworkService(), viewController: self)
     }
     
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -53,6 +53,7 @@ class HomePageViewController: UIViewController {
 
 extension HomePageViewController {
     func setupViews() {
+        view.backgroundColor = .white
         guard let homePageView = homePageView else { return }
         homePageView.backButtonDidTap = backButtonDidTap
         view.addSubview(homePageView)

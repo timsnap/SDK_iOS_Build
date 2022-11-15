@@ -23,7 +23,6 @@ public class Snappay_SDK_iOS_Build {
     
     public init(userData: UserData) {
         self.userData = userData
-        
     }
     
     /// launchSnappaySDK
@@ -31,6 +30,7 @@ public class Snappay_SDK_iOS_Build {
     public func launchSnappaySDK(rootVC: UIViewController) {
         self.rootVc = rootVC
         rootVC.navigationController?.pushViewController(homePageViewController, animated: true)
+
     }
     
     /// dismissSnappaySDK dismisses the snappay SDK
