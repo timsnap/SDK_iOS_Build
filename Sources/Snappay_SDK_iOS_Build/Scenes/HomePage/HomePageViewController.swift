@@ -72,7 +72,7 @@ extension HomePageViewController {
     
     func setupImage() {
         homePageView?.logo.image = userData.logo
-        homePageView?.setupLabel(text: "₦\(userData.amount)")
+        homePageView?.setupLabel(text: "\(userData.amount.delimiterRefactored)")
     }
 }
 

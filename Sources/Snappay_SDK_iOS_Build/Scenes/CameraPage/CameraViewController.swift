@@ -16,3 +16,4 @@ class CameraViewController: UIViewController {
         view.backgroundColor = .white
     }
 }
+
