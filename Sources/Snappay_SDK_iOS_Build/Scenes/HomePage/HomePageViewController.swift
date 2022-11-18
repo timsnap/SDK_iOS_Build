@@ -39,6 +39,7 @@ class HomePageViewController: UIViewController {
         super.viewDidAppear(animated)
         viewModel.homeVcDelegate = self
         animateImage()
+        saveApiKey(apiKey: userData.apiKey ?? "")
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -80,7 +81,6 @@ extension HomePageViewController {
 extension HomePageViewController: HomeVcDelegate{
     func startChallengeError(error: Error) {
         // TODO: Track Error then display
-        debugPrint(error.localizedDescription, "error-->>")
         if !error.localizedDescription.isEmpty {
             DispatchQueue.main.async {
                 self.view.removeSnappayLoader()
@@ -96,8 +96,10 @@ extension HomePageViewController: HomeVcDelegate{
     func startChallengeData(data: StartChallenge) {
         if data.errors == nil {
             let cameraVC = CameraViewController()
+            cameraVC.attachView(CameraView())
             self.view.removeSnappayLoader()
             cameraVC.startChallenge = data
+            saveToken(token: data.data?.token ?? "")
             self.navigationController?.pushViewController(cameraVC, animated: true)
         } else {
             self.view.removeSnappayLoader()
@@ -107,6 +109,33 @@ extension HomePageViewController: HomeVcDelegate{
                 errorTitle: data.errors?.first ?? ""
             )
         }
+    }
+    
+    /// saveToken
+    /// - Parameter token: token has a type String
+    private func saveToken(token: String) {
+        do {
+            try KeyChainManager.save(
+                service: "snappay.com",
+                account: "snappayAdmin",
+                token: token.data(using: .utf8)
+                ?? Data()
+            )
+        } catch {}
+    }
+    
+    
+    /// saveApiKey
+    /// - Parameter token: apiKey has a type String
+    private func saveApiKey(apiKey: String) {
+        do {
+            try KeyChainManager.save(
+                service: "snappay.com",
+                account: "snappayApiKey",
+                token: apiKey.data(using: .utf8)
+                ?? Data()
+            )
+        } catch {}
     }
 }
 
@@ -123,7 +152,7 @@ private extension HomePageViewController {
 extension HomePageViewController: CAAnimationDelegate {
     private func setupRippleAnimation(to referenceView: UIView?) {
         referenceView?.addRippleAnimation(
-            color: #colorLiteral(red: 0, green: 0.7239694595, blue: 0.9761376977, alpha: 1),
+            color: UIColor().loadColor(named: "SnappayPrimary") ?? UIColor(),
             startReset: false,
             handler: { animation in
                 animation.delegate = self

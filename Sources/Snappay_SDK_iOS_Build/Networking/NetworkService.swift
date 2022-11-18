@@ -9,7 +9,6 @@ import Foundation
 
 protocol NetworkServiceProtocol {
     func request<T: Codable>(
-        userData: UserData,
         endpoint: Endpoint,
         completion: @escaping (Result<T, Error>) -> ()
     )
@@ -21,7 +20,6 @@ class NetworkService: NetworkServiceProtocol {
     ///   - endpoint: the endpoint to make the HTTP request against
     ///   - completion: the JSON response converted to the provided Codable Object, if successful or failure otherwise
     func request<T: Codable>(
-        userData: UserData,
         endpoint: Endpoint,
         completion: @escaping (Result<T, Error>) -> ()
     ) {
@@ -38,7 +36,8 @@ class NetworkService: NetworkServiceProtocol {
         request.httpBody = try? JSONSerialization.data(withJSONObject: params as Any, options: [])
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue(userData.apiKey ?? "", forHTTPHeaderField: "X-API-KEY")
+        request.addValue(getApikey(), forHTTPHeaderField: "X-API-KEY")
+        request.addValue(getToken(), forHTTPHeaderField: "Authorization")
         
         let session = URLSession(configuration: .default)
         
@@ -62,5 +61,25 @@ class NetworkService: NetworkServiceProtocol {
             }
         }
         dataTask.resume()
+    }
+    
+    /// getToken Method gets the token from the KeyChain
+    func getToken() -> String {
+        guard let data = KeyChainManager.get(
+            service: "snappay.com",
+            account: "snappayAdmin"
+        ) else { return "" }
+        let token = String(decoding: data, as: UTF8.self)
+        return "Bearer \(token)"
+    }
+    
+    /// getApikey Method gets the apiKey from the KeyChain
+    func getApikey() -> String {
+        guard let data = KeyChainManager.get(
+            service: "snappay.com",
+            account: "snappayApiKey"
+        ) else { return "" }
+        let apiKey = String(decoding: data, as: UTF8.self)
+        return apiKey
     }
 }
