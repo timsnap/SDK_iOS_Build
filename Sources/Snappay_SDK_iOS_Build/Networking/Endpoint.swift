@@ -18,6 +18,7 @@ protocol EndpointProtocol {
 enum Endpoint: EndpointProtocol {
     
     case startChallenge(data: UserData)
+    case uploadChallenge(base64String: String, fileExtension: String)
     
     var scheme: String {
         switch self {
@@ -28,7 +29,7 @@ enum Endpoint: EndpointProtocol {
     
     var baseURL: String {
         switch self {
-        case .startChallenge(data: _):
+        default:
             return "cevn50cvtl.execute-api.eu-west-2.amazonaws.com"
         }
     }
@@ -37,6 +38,8 @@ enum Endpoint: EndpointProtocol {
         switch self {
         case .startChallenge(data: _):
             return "/Prod/api/challenge/start"
+        case .uploadChallenge(base64String: _, fileExtension: _):
+            return "/Prod/api/challenge/upload"
         }
     }
     
@@ -48,6 +51,14 @@ enum Endpoint: EndpointProtocol {
                 AppString.clientCode.localisedValue: data.clientCode,
                 AppString.imageHeight.localisedValue: data.imageHeight,
                 AppString.imageWidth.localisedValue: data.imageWidth
+            ]
+        case .uploadChallenge(
+            base64String: let base64String,
+            fileExtension: let fileExtension
+        ):
+            return [
+                "image": base64String,
+                "fileExtension": fileExtension
             ]
         }
     }

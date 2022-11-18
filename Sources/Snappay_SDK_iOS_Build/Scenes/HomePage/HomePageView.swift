@@ -38,7 +38,7 @@ class HomePageView: UIView {
         let paymentDescriptionLabel = UILabel()
         paymentDescriptionLabel.numberOfLines = 0
         paymentDescriptionLabel.textAlignment = .center
-        paymentDescriptionLabel.textColor = #colorLiteral(red: 0, green: 0.7239694595, blue: 0.9761376977, alpha: 1)
+        paymentDescriptionLabel.textColor = UIColor().loadColor(named: "SnappayPrimary")
         return paymentDescriptionLabel
     }()
     
@@ -70,7 +70,7 @@ class HomePageView: UIView {
     lazy var scanButton: UIButton = {
         let scanButton = UIButton()
         scanButton.setTitle("Scan", for: .normal)
-        scanButton.backgroundColor = #colorLiteral(red: 0, green: 0.7239694595, blue: 0.9761376977, alpha: 1)
+        scanButton.backgroundColor = UIColor().loadColor(named: "SnappayPrimary")
         scanButton.setTitleColor(.white, for: .normal)
         scanButton.layer.cornerRadius = 10
         scanButton.titleLabel?.font = .boldSystemFont(ofSize: 18)

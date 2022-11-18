@@ -7,8 +7,6 @@
 
 import Foundation
 
-import Foundation
-
 class HomePageNetworkService: HomePageNetworkServiceProtocol {
     
     let service: NetworkServiceProtocol = NetworkService()
@@ -18,7 +16,6 @@ class HomePageNetworkService: HomePageNetworkServiceProtocol {
         completion: @escaping (Result<StartChallenge, Error>) -> Void
     ) {
         service.request(
-            userData: requestData,
             endpoint: .startChallenge(data: requestData),
             completion: completion
         )
