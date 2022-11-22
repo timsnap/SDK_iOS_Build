@@ -31,4 +31,15 @@ class CameraViewModel: CameraViewModelDelegate {
                 }
             }
     }
+    
+    func verifyChallenge() {
+        cameraViewNetworkService.verifyChallenge { result in
+            switch result {
+            case .success(let data):
+                self.cameraViewDelegate?.verifyChallengeData(data: data)
+            case .failure(let error):
+                self.cameraViewDelegate?.verifyChallengeError(error: error)
+            }
+        }
+    }
 }

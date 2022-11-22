@@ -49,15 +49,16 @@ class KeyChainManager {
         return result as? Data
     }
     
-    static func removeFromKeyChain(service: String,
-                                   account:String,
-                                   token: Data) {
+    static func removeFromKeyChain(
+        service: String,
+        account:String
+    ) {
         // Instantiate a new default keychain query
+        
         let query: [String: AnyObject] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service as AnyObject,
-            kSecAttrAccount as String: account as AnyObject,
-            kSecValueData as String: token as AnyObject
+            kSecAttrAccount as String: account as AnyObject
         ]
         
         // Delete any existing items
@@ -71,5 +72,6 @@ class KeyChainManager {
                 // Fallback on earlier versions
             }
         }
+        
     }
 }

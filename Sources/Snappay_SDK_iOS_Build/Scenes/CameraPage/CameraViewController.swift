@@ -8,11 +8,12 @@
 import UIKit
 
 class CameraViewController: UIViewController {
-    
+    var userData: UserData?
     var startChallenge: StartChallenge?
     var cameraView: CameraView?
     var configurator: CameraViewConfiguratorProtocol = CameraViewConfigurator()
     var viewModel: CameraViewModelDelegate!
+    var globalBase64: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +36,7 @@ class CameraViewController: UIViewController {
             let base64 = base64String
             let fileExtension = ".\(fileExtension)"
             self?.view.showSnappayLoader()
+            self?.globalBase64 = base64
             let data = UploadChallengeRequest(image: base64, fileExtension: fileExtension)
             self?.viewModel.uploadChallenge(uploadData: data)
         }
@@ -60,13 +62,71 @@ extension CameraViewController {
     }
 }
 
-
 extension CameraViewController: CameraViewDelegate {
-    func uploadChallengeData(data: UploadChallenge) {
+    func verifyChallengeData(data: VerifyChallengeData) {
+        let errors = data.errors ?? []
+        let verifyData = data.data
+        let errorCount = errors.count
+        if errorCount > 0 {
+            DispatchQueue.main.async {
+                self.customAlert(
+                    errorMessage: errors.last ?? "",
+                    errorTitle: errors.first ?? "",
+                    completion: {
+                        self.goToPreviousScreen()
+                    }
+                )
+            }
+        }
+        
+        switch verifyData {
+        case "Success":
+            moveToPaymentVc()
+        case "Expired":
+            self.customAlert(errorMessage: "Token Expired", errorTitle: "⚠️", completion: {
+                self.goToPreviousScreen()
+            })
+        case "Failed":
+            self.customAlert(errorMessage: "Failed", errorTitle: "⚠️", completion: {
+                self.goToPreviousScreen()
+            })
+        default:
+            return
+        }
         self.view.removeSnappayLoader()
+    }
+    
+    func verifyChallengeError(error: Error) {
+        self.customAlert(
+            errorMessage: error.localizedDescription,
+            errorTitle: "",
+            completion: {
+                self.goToPreviousScreen()
+            }
+        )
+        self.view.removeSnappayLoader()
+    }
+    
+    func uploadChallengeData(data: UploadChallenge) {
+        viewModel.verifyChallenge()
     }
     
     func uploadChallengeError(error: Error) {
         self.view.removeSnappayLoader()
+    }
+    
+    func moveToPaymentVc() {
+        let paymentVc = PaymentViewController()
+        paymentVc.attachView(PaymentView())
+        paymentVc.userData = userData
+        if let decodedData = Data(base64Encoded: globalBase64, options: .ignoreUnknownCharacters) {
+            let image = UIImage(data: decodedData)
+            paymentVc.image = image
+        }
+        self.navigationController?.pushViewController(paymentVc, animated: true)
+    }
+    
+    func goToPreviousScreen() {
+        self.navigationController?.popViewController(animated: true)
     }
 }
