@@ -12,8 +12,6 @@ extension Double {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .currency
         let groupingSeparator = ","
-        // formatter.positiveFormat = "###,###"
-        // formatter.negativeFormat = "-###,###"
         numberFormatter.groupingSeparator = groupingSeparator
         
         numberFormatter.locale = Locale(identifier: "yo_NG")

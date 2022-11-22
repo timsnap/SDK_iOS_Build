@@ -43,7 +43,6 @@ class CameraView: UIView {
         return cameraBaseView
     }()
     
-    
     private let captureSession = AVCaptureSession()
     private lazy var previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
     private let videoDataOutput = AVCaptureVideoDataOutput()
@@ -65,6 +64,10 @@ class CameraView: UIView {
         prepareConstraints()
         setupCamera()
         
+        startRunning()
+    }
+    
+    func startRunning() {
         DispatchQueue.global(qos: .default).async {
             self.captureSession.startRunning()
             

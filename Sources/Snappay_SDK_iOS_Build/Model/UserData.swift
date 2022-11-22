@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - UserData
 public struct UserData {
     let logo: UIImage
     let phoneNumber: String
@@ -15,6 +16,8 @@ public struct UserData {
     let imageHeight: CGFloat
     let apiKey: String?
     let amount: Double
+    let receipientName: String
+    let sender: String
     
     public init(
         logo: UIImage,
@@ -23,7 +26,9 @@ public struct UserData {
         imageWidth: CGFloat,
         imageHeight: CGFloat,
         apiKey: String?,
-        amount: Double
+        amount: Double,
+        receipientName: String,
+        sender: String
     ) {
         self.logo = logo
         self.phoneNumber = phoneNumber
@@ -32,5 +37,7 @@ public struct UserData {
         self.imageHeight = imageHeight
         self.apiKey = apiKey
         self.amount = amount
+        self.receipientName = receipientName
+        self.sender = sender
     }
 }

@@ -14,6 +14,7 @@ protocol CameraViewNetworkServiceProtocol {
         completion: @escaping (Result<UploadChallenge, Error>
         ) -> Void
     )
+    func verifyChallenge(completion: @escaping (Result<VerifyChallengeData, Error>) -> Void)
 }
 
 protocol CameraViewConfiguratorProtocol: AnyObject {
@@ -22,10 +23,13 @@ protocol CameraViewConfiguratorProtocol: AnyObject {
 
 protocol CameraViewModelDelegate: AnyObject {
     func uploadChallenge(uploadData: UploadChallengeRequest)
+    func verifyChallenge()
     var cameraViewDelegate: CameraViewDelegate? {set get }
 }
 
 protocol CameraViewDelegate {
     func uploadChallengeData(data: UploadChallenge)
     func uploadChallengeError(error: Error)
+    func verifyChallengeData(data: VerifyChallengeData)
+    func verifyChallengeError(error: Error)
 }

@@ -33,7 +33,9 @@ class NetworkService: NetworkServiceProtocol {
         let params = endpoint.parameters
         
         request.httpMethod = endpoint.method
-        request.httpBody = try? JSONSerialization.data(withJSONObject: params as Any, options: [])
+        if params != nil {
+            request.httpBody = try? JSONSerialization.data(withJSONObject: params as Any, options: [])
+        }
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue(getApikey(), forHTTPHeaderField: "X-API-KEY")
@@ -83,3 +85,4 @@ class NetworkService: NetworkServiceProtocol {
         return apiKey
     }
 }
+

@@ -19,6 +19,7 @@ enum Endpoint: EndpointProtocol {
     
     case startChallenge(data: UserData)
     case uploadChallenge(base64String: String, fileExtension: String)
+    case verifyChallenge
     
     var scheme: String {
         switch self {
@@ -40,6 +41,8 @@ enum Endpoint: EndpointProtocol {
             return "/Prod/api/challenge/start"
         case .uploadChallenge(base64String: _, fileExtension: _):
             return "/Prod/api/challenge/upload"
+        case .verifyChallenge:
+            return "/Prod/api/challenge/verify"
         }
     }
     
@@ -52,19 +55,20 @@ enum Endpoint: EndpointProtocol {
                 AppString.imageHeight.localisedValue: data.imageHeight,
                 AppString.imageWidth.localisedValue: data.imageWidth
             ]
-        case .uploadChallenge(
-            base64String: let base64String,
-            fileExtension: let fileExtension
-        ):
+        case .uploadChallenge(base64String: let base64String,fileExtension: let fileExtension):
             return [
                 "image": base64String,
                 "fileExtension": fileExtension
             ]
+        case .verifyChallenge:
+            return nil
         }
     }
     
     var method: String {
         switch self {
+        case .verifyChallenge:
+            return "GET"
         default:
             return "POST"
         }

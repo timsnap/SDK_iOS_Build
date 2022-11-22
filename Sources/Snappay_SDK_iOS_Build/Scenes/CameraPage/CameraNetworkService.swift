@@ -25,4 +25,8 @@ class CameraViewNetworkService: CameraViewNetworkServiceProtocol {
             completion: completion
         )
     }
+    
+    func verifyChallenge(completion: @escaping (Result<VerifyChallengeData, Error>) -> Void) {
+        service.request(endpoint: .verifyChallenge, completion: completion)
+    }
 }

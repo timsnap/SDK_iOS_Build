@@ -29,7 +29,6 @@ class HomePageViewController: UIViewController {
         configurator.configure(with: HomePageNetworkService(), viewController: self)
     }
     
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -40,6 +39,7 @@ class HomePageViewController: UIViewController {
         viewModel.homeVcDelegate = self
         animateImage()
         saveApiKey(apiKey: userData.apiKey ?? "")
+        removeToken()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -87,7 +87,9 @@ extension HomePageViewController: HomeVcDelegate{
                 self.stopAnimation()
                 self.customAlert(
                     errorMessage: error.localizedDescription,
-                    errorTitle: "⚠️"
+                    errorTitle: "⚠️", completion: {
+                        
+                    }
                 )
             }
         }
@@ -99,6 +101,7 @@ extension HomePageViewController: HomeVcDelegate{
             cameraVC.attachView(CameraView())
             self.view.removeSnappayLoader()
             cameraVC.startChallenge = data
+            cameraVC.userData = userData
             saveToken(token: data.data?.token ?? "")
             self.navigationController?.pushViewController(cameraVC, animated: true)
         } else {
@@ -106,7 +109,9 @@ extension HomePageViewController: HomeVcDelegate{
             self.stopAnimation()
             self.customAlert(
                 errorMessage: "Incorrect Api Key",
-                errorTitle: data.errors?.first ?? ""
+                errorTitle: data.errors?.first ?? "", completion: {
+                    
+                }
             )
         }
     }
@@ -124,6 +129,13 @@ extension HomePageViewController: HomeVcDelegate{
         } catch {}
     }
     
+    /// removeToken
+    private func removeToken() {
+        KeyChainManager.removeFromKeyChain(
+            service: "snappay.com",
+            account: "snappayAdmin"
+        )
+    }
     
     /// saveApiKey
     /// - Parameter token: apiKey has a type String
