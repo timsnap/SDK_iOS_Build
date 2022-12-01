@@ -11,7 +11,8 @@ import Foundation
 struct StartChallenge: Codable {
     let errors: [String]?
     let data: StartChallengeData?
-    let statusCode: Int
+    let statusCode: Int?
+    let message: String?
 }
 
 // MARK: - StartChallengeData

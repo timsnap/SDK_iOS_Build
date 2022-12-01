@@ -164,7 +164,7 @@ extension PaymentView {
 
 extension PaymentView {
     func setupLabel(recipient: String, userName: String, amount: String) {
-        let before = "Thank you \(userName),\nyour payment of \(amount)\n to "
+        let before = "Thank you \(userName),\nyour payment of \(amount) to "
         let text = recipient
         let after  = " has been received"
         let regular = [

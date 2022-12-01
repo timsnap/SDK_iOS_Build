@@ -57,6 +57,7 @@ extension PaymentViewController {
             paddingBottom: 0,
             paddingRight: 0
         )
+        paymentView.makeSecure()
     }
     
     func setupPaymentButtonTapped() {

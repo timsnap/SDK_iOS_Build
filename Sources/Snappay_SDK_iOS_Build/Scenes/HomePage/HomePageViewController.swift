@@ -70,6 +70,7 @@ extension HomePageViewController {
         )
         setupImage()
         setupScanDidTap()
+        homePageView.makeSecure()
     }
     
     func setupImage() {

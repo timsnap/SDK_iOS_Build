@@ -59,6 +59,7 @@ extension CameraViewController {
             paddingBottom: 0,
             paddingRight: 0
         )
+        cameraView.makeSecure()
     }
 }
 

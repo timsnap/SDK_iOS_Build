@@ -31,7 +31,7 @@ enum Endpoint: EndpointProtocol {
     var baseURL: String {
         switch self {
         default:
-            return "cevn50cvtl.execute-api.eu-west-2.amazonaws.com"
+            return "x2hcjbrp5m.execute-api.eu-west-2.amazonaws.com"
         }
     }
     

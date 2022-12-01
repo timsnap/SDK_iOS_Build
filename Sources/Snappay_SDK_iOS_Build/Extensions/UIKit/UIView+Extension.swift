@@ -257,10 +257,37 @@ extension UIView {
         let snappayLoader = SnappayLoader(frame: frame)
         self.addSubview(snappayLoader)
     }
-
+    
     func removeSnappayLoader() {
         if let blurLoader = subviews.first(where: { $0 is SnappayLoader }) {
             blurLoader.removeFromSuperview()
+        }
+    }
+    
+    func isScreenRecorded() -> Bool {
+        return UIScreen.main.isCaptured
+    }
+    
+    func blurScreen() {
+        let blurView = BlurView(frame: frame)
+        self.addSubview(blurView)
+    }
+    
+    func clearScreen() {
+        if let blurView = subviews.first(where: { $0 is BlurView }) {
+            blurView.removeFromSuperview()
+        }
+    }
+    
+    func makeSecure() {
+        DispatchQueue.main.async {
+            let field = UITextField()
+            field.isSecureTextEntry = true
+            self.addSubview(field)
+            field.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+            field.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+            self.layer.superlayer?.addSublayer(field.layer)
+            field.layer.sublayers?.first?.addSublayer(self.layer)
         }
     }
 }
